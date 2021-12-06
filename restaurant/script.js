@@ -1,3 +1,11 @@
+// interface Employees {
+//   name: string,
+//   position: string,
+//   isLeader: boolean,
+//   salary: number,
+//   isWorks: boolean,
+//   department: number,
+// }
 var Employee = /** @class */ (function () {
     function Employee(dataEmployee) {
         this.name = dataEmployee.name;
@@ -9,6 +17,10 @@ var Employee = /** @class */ (function () {
     }
     return Employee;
 }());
+// interface Departments {
+//   number: number,
+//     name: string,
+// }
 var Department = /** @class */ (function () {
     function Department(dataDepartments) {
         this.number = dataDepartments.number;
@@ -16,6 +28,21 @@ var Department = /** @class */ (function () {
     }
     return Department;
 }());
+// interface IRestauratn {
+//   sumSalary(callback: Function): null | {
+//     [key: string]: number
+//   };
+//   averageSalary(callback: Function): null | number;
+//   salaryMinToMax(callback: Function): null | {
+//     [key: string]: {
+//       [key: string]: {
+//         [key: string]: number
+//       }
+//     }
+//   };
+//   amountEmployee(callback: Function): null | number;
+//   departmentLeader(callback: Function): null | number[];
+// }
 var Restaurant = /** @class */ (function () {
     function Restaurant() {
         this.employees = [];
@@ -306,9 +333,6 @@ function changeCard() {
         isFlag = false;
     }
     else {
-        // let resultObject: {
-        //   [key: string]: number | string | boolean
-        // } = {};
         var resultObject = void 0;
         for (var i = 0; i < elementInput.length; i++) {
             var definitelyInput = document.getElementsByClassName('inputInfo')[i];

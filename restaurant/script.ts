@@ -1,12 +1,3 @@
-interface Employees {
-  name: string,
-  position: string,
-  isLeader: boolean,
-  salary: number,
-  isWorks: boolean,
-  department: number,
-}
-
 class Employee {
   name: string;
   position: string;
@@ -14,7 +5,7 @@ class Employee {
   salary: number;
   isWorks: boolean;
   department: number;
-  constructor(dataEmployee: Employees) {
+  constructor(dataEmployee: Employee) {
     this.name = dataEmployee.name;
     this.position = dataEmployee.position;
     this.isLeader = dataEmployee.isLeader;
@@ -24,39 +15,18 @@ class Employee {
   }
 }
 
-interface Departments {
-  number: number,
-    name: string,
-}
-
 class Department {
   number: number;
   name: string;
-  constructor(dataDepartments: Departments) {
+  constructor(dataDepartments: Department) {
     this.number = dataDepartments.number;
     this.name = dataDepartments.name;
   }
 }
 
-interface IRestauratn<T> {
-  sumSalary(callback: Function): null | {
-    [key: string]: number
-  };
-  averageSalary(callback: Function): null | number;
-  salaryMinToMax(callback: Function): null | {
-    [key: string]: {
-      [key: string]: {
-        [key: string]: number
-      }
-    }
-  };
-  amountEmployee(callback: Function): null | number;
-  departmentLeader(callback: Function): null | number[];
-}
-
-class Restaurant<P> implements IRestauratn<P> {
+class Restaurant{
   employees: Employee[];
-  departments: Departments[];
+  departments: Department[];
 
   constructor() {
     this.employees = [];
@@ -71,7 +41,7 @@ class Restaurant<P> implements IRestauratn<P> {
     this.departments.push(dataDepartment);
   }
 
-  sumSalary(callback: Function) {
+  sumSalary(callback: Function): null | {[key: string]: number} {
     let result: {
       [key: string]: number
     } = {};
@@ -90,7 +60,7 @@ class Restaurant<P> implements IRestauratn<P> {
     return null;
   }
 
-  averageSalary(callback: Function) {
+  averageSalary(callback: Function): null | number {
     let result: number = 0;
     let count: number = 0;
     if (this.departments.length && this.employees.length) {
@@ -105,7 +75,13 @@ class Restaurant<P> implements IRestauratn<P> {
     return null;
   }
 
-  salaryMinToMax(callback: Function) {
+  salaryMinToMax(callback: Function): null |
+  {[key: string]: {
+      [key: string]: {
+        [key: string]: number
+      }
+  }}
+  {
     let result: {
       [key: string]: {
         [key: string]: {
@@ -141,7 +117,7 @@ class Restaurant<P> implements IRestauratn<P> {
     return null;
   }
 
-  amountEmployee(callback: Function) {
+  amountEmployee(callback: Function): null | number {
     let result: number = 0;
     if (this.departments.length && this.employees.length) {
       this.employees.forEach((employee) => {
@@ -154,7 +130,7 @@ class Restaurant<P> implements IRestauratn<P> {
     return null;
   }
 
-  departmentLeader(callback: Function) {
+  departmentLeader(callback: Function): null | number[] {
     let leader: number[] = [];
     let notLeader: number[] = [];
     if (this.departments.length && this.employees.length) {

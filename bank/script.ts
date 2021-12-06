@@ -1,13 +1,3 @@
-interface Clients {
-  name: string;
-  isActive: boolean;
-  registration: object;
-  id?: number;
-  checks: account[];
-}
-
-type account = Credit | Debet;
-
 interface Debet {
   name: 'Debet';
   balance: number;
@@ -23,13 +13,15 @@ interface Credit {
   currency: string;
 }
 
+type account = Credit | Debet;
+
 class Client {
   name: string;
   isActive: boolean;
   registration: object;
   id?: number;
   checks: account[];
-  constructor(dataClient: Clients) {
+  constructor(dataClient: Client) {
     this.name = dataClient.name;
     this.isActive = dataClient.isActive;
     this.registration = dataClient.registration;
@@ -37,15 +29,8 @@ class Client {
     this.checks = dataClient.checks;
   }
 }
-interface IBank {
-  haveMoney(callback: Function): Promise<null | number>
-    debtMoney(callback: Function): Promise<null | number>
-    sumClientsDebt(callback: Function, isActive: Function): Promise<null | {
-      [key: string]: number
-    }>
-}
 
-class Bank implements IBank {
+class Bank {
   clients: Client[];
 
   constructor() {
@@ -55,7 +40,7 @@ class Bank implements IBank {
     this.clients.push(dataClient)
   }
 
-  async haveMoney(callback: Function) {
+  async haveMoney(callback: Function): Promise<null | number> {
     let response = await fetch('https://freecurrencyapi.net/api/v2/latest?apikey=dae13160-3b0e-11ec-8361-e108ba6473f9');
     let currencies = (await response.json()).data;
     let result: number = 0;
@@ -76,7 +61,7 @@ class Bank implements IBank {
     return null;
   }
 
-  async debtMoney(callback: Function) {
+  async debtMoney(callback: Function): Promise<null | number> {
     let response = await fetch('https://freecurrencyapi.net/api/v2/latest?apikey=dae13160-3b0e-11ec-8361-e108ba6473f9');
     let {
       data
@@ -101,7 +86,9 @@ class Bank implements IBank {
     return null;
   }
 
-  async sumClientsDebt(callback: Function, isActive: Function) {
+  async sumClientsDebt(callback: Function, isActive: Function): Promise<null | {
+      [key: string]: number
+    }> {
     let response = await fetch('https://freecurrencyapi.net/api/v2/latest?apikey=dae13160-3b0e-11ec-8361-e108ba6473f9');
     let currencies = (await response.json()).data;
     let result: {
@@ -202,8 +189,7 @@ class Render {
   indexObject?: number = 0;
   addNewClient;
   newClient?: {
-    [key: string]: string | number | boolean | object | account[] | 'checks' []
-  } = {};
+    [key: string]: string | number | boolean | object | account[] } = {};
   blockProperty?: HTMLElement;
 
   constructor(container: string) {
@@ -376,7 +362,7 @@ class Render {
 
     function updateCheck(itemСheck: HTMLElement, index: number, flag: boolean, copyNewClient: {
     [key: string]: string | number | boolean | object | account[] | 'checks' []
-  } = {}) {
+    } = {}) {
       if (flag) {
         for (let i = 0; i < itemСheck.children.length; i++) {
           if (((itemСheck.children[i]) as HTMLInputElement).type === 'radio') {
