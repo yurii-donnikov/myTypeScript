@@ -189,7 +189,8 @@ class Render {
   indexObject?: number = 0;
   addNewClient;
   newClient?: {
-    [key: string]: string | number | boolean | object | account[] } = {};
+    [key: string]: string | number | boolean | object | account[] 
+  } = {};
   blockProperty?: HTMLElement;
 
   constructor(container: string) {
