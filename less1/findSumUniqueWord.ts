@@ -1,7 +1,5 @@
 let findSumUniqueWord = function(): Function {
-  let cache: {
-    [key: string]: number
-  } = {};
+  let cache: {[key: string]: number} = {};
   return function findSumUniqueWordRecursion(offer: string, word: string, count?: number, result?: number): number | null {
     count = count || 0;
     result = result || 0;
@@ -13,7 +11,7 @@ let findSumUniqueWord = function(): Function {
       return cache[offer + word];
     }
     if (count < arrayOffer.length) {
-      if (arrayOffer[count] == word) {
+      if (arrayOffer[count] === word) {
         result++;
         return findSumUniqueWordRecursion(offer, word, ++count, result);
       }

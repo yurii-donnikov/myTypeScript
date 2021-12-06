@@ -41,10 +41,8 @@ class Restaurant{
     this.departments.push(dataDepartment);
   }
 
-  sumSalary(callback: Function): null | {[key: string]: number} {
-    let result: {
-      [key: string]: number
-    } = {};
+  sumSalary(callback: Function): {[key: string]: number} | null {
+    let result: {[key: string]: number} = {};
     if (this.departments.length && this.employees.length) {
       this.employees.forEach((employee) => {
         if (callback(employee)) {
@@ -60,7 +58,7 @@ class Restaurant{
     return null;
   }
 
-  averageSalary(callback: Function): null | number {
+  averageSalary(callback: Function): number | null{
     let result: number = 0;
     let count: number = 0;
     if (this.departments.length && this.employees.length) {
@@ -75,20 +73,8 @@ class Restaurant{
     return null;
   }
 
-  salaryMinToMax(callback: Function): null |
-  {[key: string]: {
-      [key: string]: {
-        [key: string]: number
-      }
-  }}
-  {
-    let result: {
-      [key: string]: {
-        [key: string]: {
-          [key: string]: number
-        }
-      }
-    } = {};
+  salaryMinToMax(callback: Function): {[key: string]: {[key: string]: {[key: string]: number}}} | null {
+    let result: {[key: string]: {[key: string]: {[key: string]: number}}} = {};
     if (this.departments.length && this.employees.length) {
       this.departments.forEach((department) => {
         result[department.number] = {};
@@ -117,7 +103,7 @@ class Restaurant{
     return null;
   }
 
-  amountEmployee(callback: Function): null | number {
+  amountEmployee(callback: Function): number | null {
     let result: number = 0;
     if (this.departments.length && this.employees.length) {
       this.employees.forEach((employee) => {
@@ -130,7 +116,7 @@ class Restaurant{
     return null;
   }
 
-  departmentLeader(callback: Function): null | number[] {
+  departmentLeader(callback: Function): number[] | null{
     let leader: number[] = [];
     let notLeader: number[] = [];
     if (this.departments.length && this.employees.length) {

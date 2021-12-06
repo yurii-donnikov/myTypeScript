@@ -10,7 +10,7 @@ let addTwoMatrix = function(): Function {
     index = index || 0;
     index2 = index2 || 0;
     if (index < matrix.length) {
-      if (typeof result[index] == 'undefined') {
+      if (!result[index]) {
         result[index] = [];
       }
       if (index2 < matrix[0].length) {

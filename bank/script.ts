@@ -63,9 +63,7 @@ class Bank {
 
   async debtMoney(callback: Function): Promise<null | number> {
     let response = await fetch('https://freecurrencyapi.net/api/v2/latest?apikey=dae13160-3b0e-11ec-8361-e108ba6473f9');
-    let {
-      data
-    } = await response.json();
+    let {data} = await response.json();
     let result: number = 0;
     if (this.clients.length) {
       this.clients.forEach((client) => {
@@ -86,14 +84,10 @@ class Bank {
     return null;
   }
 
-  async sumClientsDebt(callback: Function, isActive: Function): Promise<null | {
-      [key: string]: number
-    }> {
+  async sumClientsDebt(callback: Function, isActive: Function): Promise<null | {[key: string]: number}> {
     let response = await fetch('https://freecurrencyapi.net/api/v2/latest?apikey=dae13160-3b0e-11ec-8361-e108ba6473f9');
     let currencies = (await response.json()).data;
-    let result: {
-      [key: string]: number
-    } = {};
+    let result: {[key: string]: number} = {};
     result.clients = 0;
     result.debt = 0;
     if (this.clients.length) {

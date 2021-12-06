@@ -12,7 +12,7 @@ Function.prototype.myBind = function<T> (obj: object, ...arg: Array<T> ): Functi
 }
 
 Function.prototype.myCall = function<T> (obj: object, ...arg: Array<T> ): T {
-  let copyObj: Record < string | number | symbol, Function > = Object.create(obj);
+  let copyObj: Record< string | number | symbol, Function > = Object.create(obj);
   copyObj['func'] = this as Function;
   return copyObj['func'](...arg);
 }
@@ -41,7 +41,7 @@ Array.prototype.myMap = function<K> (callback: Function): Array<K>{
 Array.prototype.myFilter = function<K> (funcFilter: Function): Array<K> {
   let resultArray: Array<K> = [];
   for (let i = 0; i < this.length; i++) {
-    if (funcFilter(this[i], i, this) === true) {
+    if (funcFilter(this[i], i, this)) {
       resultArray.push(this[i]);
     }
   }
@@ -50,7 +50,7 @@ Array.prototype.myFilter = function<K> (funcFilter: Function): Array<K> {
 
 Array.prototype.myReduce = function(callback: Function, startElement: number): number {
   let result: number;
-  if (startElement === undefined || startElement === 0) {
+  if (!startElement) {
     result = 0;
   } else result = startElement;
   for (let i = 0; i < this.length; i++) {

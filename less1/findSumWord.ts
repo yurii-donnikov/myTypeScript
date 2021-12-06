@@ -1,12 +1,8 @@
 let findSumWord = function(): Function {
-  let cache: {
-    [key: string]: {
-      [key: string]: number
-    }
-  } = {};
+  let cache: {[key: string]: {[key: string]: number}} = {};
   return function findCountWordRecurcion(offer: string, result?: {
     [key: string]: number
-  }, count?: number, arrayOffer?: string[]): object | null {
+  }, count?: number, arrayOffer?: string[]): {[key: string]: number} | null {
     count = count || 0;
     result = result || {};
     arrayOffer = arrayOffer || ('' + offer).split(' ');

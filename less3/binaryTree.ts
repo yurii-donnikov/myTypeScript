@@ -8,7 +8,7 @@ class BinaryNode<T> {
     this.right = null;
     this.left = null;
   }
-    
+
   insert(value: T, node: BinaryNode<T> ): boolean | null {
     node = node || this;
     if (typeof arguments[0] === 'undefined') { 
@@ -19,20 +19,20 @@ class BinaryNode<T> {
       return true;
     }
     if (value > node.value) {
-      if (node.right === null) {
+      if (!node.right) {
         node.right = new BinaryNode();
       }
       return this.insert(value, node.right);
     }
     if (node.value > value) {
-      if (node.left === null) {
+      if (!node.left) {
         node.left = new BinaryNode();
       }
       return this.insert(value, node.left);
     }
   }
 
-  search(value: T, node?: BinaryNode<T> ): null | T {
+  search(value: T, node?: BinaryNode<T> ): T | null {
     node = node || this;
     if (arguments[0] === undefined) {
       return null;
@@ -41,13 +41,13 @@ class BinaryNode<T> {
       return node.value;
     }
     if (node.value && node.value > value) {
-      if (node.left === null) {
+      if (!node.left) {
         return null;
       }
       return this.search(value, node.left);
     }
     if (node.value && node.value < value) {
-      if (node.right === null) {
+      if (!node.right) {
         return null;
       }
       return this.search(value, node.right);
@@ -55,7 +55,7 @@ class BinaryNode<T> {
       return null;
   }
   
-  remove(value: T, node?: BinaryNode<T>, linkParent?: BinaryNode<T> , flag?: boolean): null | T {
+  remove(value: T, node?: BinaryNode<T>, linkParent?: BinaryNode<T> , flag?: boolean): T | null {
     if (arguments[0] === undefined) {
       return null;
     }
@@ -66,7 +66,7 @@ class BinaryNode<T> {
     linkParent = linkParent || this;
     flag = flag || false;
     if (flag) {
-      if (node.right !== null) {
+      if (node.right) {
         return this.remove(value, node.right, node, flag);
       } else {
         linkParent.right = null;
@@ -74,18 +74,18 @@ class BinaryNode<T> {
       }
     }
     if (node.value === value) {
-      if (node.left === null && node.right === null) {
+      if (!node.left && !node.right) {
         if (linkParent.left && linkParent.left.value === node.value) {
           linkParent.left = null;
         } else {
           linkParent.right = null;
         }
       }
-      if (node.left === null && node.right) {
+      if (!node.left && node.right) {
         node.value = node.right.value;
         node.right = node.right.right;
       }
-      if (node.left && node.right === null) {
+      if (node.left && !node.right) {
         node.value = node.left.value;
         node.left = node.left.left;
       }
@@ -102,17 +102,16 @@ class BinaryNode<T> {
         } else {
           node.value = node.left.value;
           node.left = node.left.left;
-        
         }
       }
     } else {
       if (node.value && node.value < value) {
-        if (node.right !== null) {
+        if (node.right) {
           return this.remove(value, node.right, node, flag);
         }
       }
       if (node.value && node.value > value) {
-        if (node.left !== null) {
+        if (node.left) {
           return this.remove(value, node.left, node, flag);
         }
       }

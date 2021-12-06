@@ -6,8 +6,8 @@ let calculateDigitsNumber = function(): Function {
   } = {};
   return function calculateDigitsNumberRecursion(numeric: number, result?: {
     [key: string]: number
-  }, count?: number, arrayNumber?: string[]): object | null {
-    if (typeof arguments[0] == 'undefined') {
+  }, count?: number, arrayNumber?: string[]): {[key: string]: number} | null {
+    if (typeof arguments[0] === 'undefined') {
       return null;
     }
     if (cache[numeric]) {

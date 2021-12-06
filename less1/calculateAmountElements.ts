@@ -2,7 +2,10 @@ let calculateAmountElements = function(): Function {
   let cache: {
     [key: string]: number
   } = {};
-  return function calculateAmountElementsRecursion(array: number[], callback: Function, count?: number, result?: number): number {
+  return function calculateAmountElementsRecursion(array: number[], callback: Function, count?: number, result?: number): number | null {
+    if (!arguments[0] || !arguments[1]) {
+      return null;
+    }
     if (cache[array + String(callback)]) {
       return cache[array + String(callback)];
     }

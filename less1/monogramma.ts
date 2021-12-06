@@ -1,9 +1,10 @@
 let monogrammaMemoiz = function(): Function {
-  let cache: {
-    [key: string]: boolean
-  } = {};
-  return function monogrammaRecursion(wordOne: string, wordTwo: string, count1?: number, count2?: number, arrayWordOne?: string[], arrayWordTwo?: string[]): boolean {
-    if (typeof cache[wordOne + wordTwo] != 'undefined') {
+  let cache: {[key: string]: boolean} = {};
+  return function monogrammaRecursion(wordOne: string, wordTwo: string, count1?: number, count2?: number, arrayWordOne?: string[], arrayWordTwo?: string[]): boolean | null{
+    if (!arguments[1]) {
+      return null;
+    }
+    if (typeof cache[wordOne + wordTwo] !== 'undefined') {
       return cache[wordOne + wordTwo];
     }
     count1 = count1 || 0;
@@ -13,10 +14,10 @@ let monogrammaMemoiz = function(): Function {
     if (arrayWordOne.length != arrayWordTwo.length) {
       return cache[wordOne + wordTwo] = false;
     }
-    if (arrayWordOne.toString() == arrayWordTwo.toString()) {
+    if (arrayWordOne.toString() === arrayWordTwo.toString()) {
       return cache[wordOne + wordTwo] = true;
     } else {
-      if (arrayWordOne[count1] == arrayWordTwo[count2] || count2 > arrayWordOne.length - 1) {
+      if (arrayWordOne[count1] === arrayWordTwo[count2] || count2 > arrayWordOne.length - 1) {
         if (count1 > arrayWordOne.length - 1) {
           return false;
         }

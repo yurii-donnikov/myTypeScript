@@ -1,8 +1,9 @@
 let calculateSumElements = function(): Function {
-  let cache: {
-    [key: string]: number
-  } = {};
-  return function calculateSumElementsRecursion(array: number[], callback: Function, count?: number, result?: number): number {
+  let cache: {[key: string]: number} = {};
+  return function calculateSumElementsRecursion(array: number[], callback: Function, count?: number, result?: number): number | null {
+    if (!arguments[0] || !arguments[1]) {
+      return null;
+    }
     if (cache[array + String(callback)]) {
       return cache[array + String(callback)];
     }
