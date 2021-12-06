@@ -1,4 +1,4 @@
-interface Array < T > {
+interface Array<T> {
   sortSelection(callback: T): void;
   sortBubble(callback: T): void;
 }

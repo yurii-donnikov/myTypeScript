@@ -306,7 +306,10 @@ function changeCard() {
         isFlag = false;
     }
     else {
-        var resultObject = {};
+        // let resultObject: {
+        //   [key: string]: number | string | boolean
+        // } = {};
+        var resultObject = void 0;
         for (var i = 0; i < elementInput.length; i++) {
             var definitelyInput = document.getElementsByClassName('inputInfo')[i];
             if (definitelyInput.children.length) {

@@ -2,7 +2,7 @@ interface Clients {
   name: string;
   isActive: boolean;
   registration: object;
-  id ? : number;
+  id?: number;
   checks: account[];
 }
 
@@ -27,7 +27,7 @@ class Client {
   name: string;
   isActive: boolean;
   registration: object;
-  id ? : number;
+  id?: number;
   checks: account[];
   constructor(dataClient: Clients) {
     this.name = dataClient.name;
@@ -38,15 +38,15 @@ class Client {
   }
 }
 interface IBank {
-  haveMoney(callback: Function): Promise < null | number >
-    debtMoney(callback: Function): Promise < null | number >
-    sumClientsDebt(callback: Function, isActive: Function): Promise < null | {
+  haveMoney(callback: Function): Promise<null | number>
+    debtMoney(callback: Function): Promise<null | number>
+    sumClientsDebt(callback: Function, isActive: Function): Promise<null | {
       [key: string]: number
-    } >
+    }>
 }
 
 class Bank implements IBank {
-  clients: Client[]
+  clients: Client[];
 
   constructor() {
     this.clients = [];
@@ -193,18 +193,18 @@ bank.addClient(new Client({
 
 class Render {
   mainBlock: HTMLElement;
-  clientCard ? : HTMLElement;
-  cardBlock ? : HTMLElement;
-  buttonChange ? : HTMLElement;
-  buttonDelete ? : HTMLElement;
-  indexActiveCard ? : number = 0;
-  isFlag ? : boolean = false;
-  indexObject ? : number = 0;
-  newClient ? : {
+  clientCard?: HTMLElement;
+  cardBlock?: HTMLElement;
+  buttonChange?: HTMLElement;
+  buttonDelete?: HTMLElement;
+  indexActiveCard?: number = 0;
+  isFlag?: boolean = false;
+  indexObject?: number = 0;
+  addNewClient;
+  newClient?: {
     [key: string]: string | number | boolean | object | account[] | 'checks' []
   } = {};
-  addNewClient ? : any;
-  blockProperty ? : HTMLElement;
+  blockProperty?: HTMLElement;
 
   constructor(container: string) {
     this.mainBlock = document.querySelector(container) as HTMLElement;
@@ -282,7 +282,7 @@ class Render {
                 this.blockProperty = blockCheck.appendChild(document.createElement('div'));
                 this.blockProperty.innerHTML =
                   `<span class="checkProperty">${item}</span>
-                           <span class="${item}${objectClient[property][i]['name']}">${objectClient[property][i][items]}</span>`;
+                   <span class="${item}${objectClient[property][i]['name']}">${objectClient[property][i][items]}</span>`;
               }
             }
           } else {
@@ -290,7 +290,7 @@ class Render {
             this.blockProperty.className = 'blockProperty';
             this.blockProperty.innerHTML =
               `<span class="property">${property}</span>
-                <span class="${property}">${objectClient[prop]}</span>`;
+               <span class="${property}">${objectClient[prop]}</span>`;
           }
         }
         this.buttonChange = this.clientCard.appendChild(document.createElement('div'));
@@ -305,9 +305,7 @@ class Render {
         this.buttonDelete.setAttribute('data-update', String(bank.clients[i]['id']));
         this.clientCard.addEventListener('click', (event) => {
           let action = ((event.target) as Element).getAttribute('data-function');
-          let self: {
-            [key: string]: any
-          } = this;
+          let self: object = this;
           if (typeof self[String(action)] === 'function') {
             self[String(action)](event.target);
           }
@@ -377,9 +375,8 @@ class Render {
     }
 
     function updateCheck(itemСheck: HTMLElement, index: number, flag: boolean, copyNewClient: {
-      [key: string]: any
-    }) {
-
+    [key: string]: string | number | boolean | object | account[] | 'checks' []
+  } = {}) {
       if (flag) {
         for (let i = 0; i < itemСheck.children.length; i++) {
           if (((itemСheck.children[i]) as HTMLInputElement).type === 'radio') {

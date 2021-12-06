@@ -2,7 +2,7 @@ let findSumUniqueWord = function(): Function {
   let cache: {
     [key: string]: number
   } = {};
-  return function findSumUniqueWordRecursion(offer: string, word: string, count ? : number, result ? : number): number | null {
+  return function findSumUniqueWordRecursion(offer: string, word: string, count?: number, result?: number): number | null {
     count = count || 0;
     result = result || 0;
     let arrayOffer: string[] = offer.split(' ');

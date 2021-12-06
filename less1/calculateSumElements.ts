@@ -2,7 +2,7 @@ let calculateSumElements = function(): Function {
   let cache: {
     [key: string]: number
   } = {};
-  return function calculateSumElementsRecursion(array: number[], callback: Function, count ? : number, result ? : number): number {
+  return function calculateSumElementsRecursion(array: number[], callback: Function, count?: number, result?: number): number {
     if (cache[array + String(callback)]) {
       return cache[array + String(callback)];
     }

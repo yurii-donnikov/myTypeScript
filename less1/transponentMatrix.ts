@@ -2,7 +2,7 @@ let transponentMatrix = function(): Function {
   let cache: {
     [key: string]: number[][]
   } = {};
-  return function transponentMatrixRecursion(matrix: number[][], index ? : number, index2 ? : number, result ? : number[][]): number[][] {
+  return function transponentMatrixRecursion(matrix: number[][], index?: number, index2?: number, result?: number[][]): number[][] {
     if (cache[String(matrix)]) {
       return cache[String(matrix)];
     }

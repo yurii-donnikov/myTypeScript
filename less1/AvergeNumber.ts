@@ -2,7 +2,7 @@ let AvergeNumber = function(): Function {
   let cache: {
     [key: string]: number
   } = {};
-  return function AvergeNumberRecurion(array: number[], callback: Function, result ? : number, count ? : number, amountElem ? : number): number {
+  return function AvergeNumberRecurion(array: number[], callback: Function, result?: number, count?: number, amountElem?: number): number {
     if (cache[array + String(callback)]) {
       return cache[array + String(callback)];
     }
@@ -24,7 +24,7 @@ let AvergeNumberDobleArray = function(): Function {
   let cache: {
     [key: string]: number
   } = {};
-  return function AvergeNumberDobleArrayRecursion(array: number[][], callback: Function, index ? : number, index2 ? : number, result ? : number, amountElem ? : number): number {
+  return function AvergeNumberDobleArrayRecursion(array: number[][], callback: Function, index?: number, index2?: number, result?: number, amountElem?: number): number {
     if (cache[array + String(callback)]) {
       return cache[array + String(callback)];
     }

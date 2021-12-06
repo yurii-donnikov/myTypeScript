@@ -4,9 +4,9 @@ let findSumWord = function(): Function {
       [key: string]: number
     }
   } = {};
-  return function findCountWordRecurcion(offer: string, result ? : {
+  return function findCountWordRecurcion(offer: string, result?: {
     [key: string]: number
-  }, count ? : number, arrayOffer ? : string[]): object | null {
+  }, count?: number, arrayOffer?: string[]): object | null {
     count = count || 0;
     result = result || {};
     arrayOffer = arrayOffer || ('' + offer).split(' ');

@@ -2,7 +2,7 @@ let FindNumSystemTen = function(): Function {
   let cache: {
     [key: string]: number
   } = {};
-  return function FindNumSystemTenRecursion(numSystemTwo: number, count ? : number, arrayNum ? : string[], result ? : number): number | null {
+  return function FindNumSystemTenRecursion(numSystemTwo: number, count?: number, arrayNum?: string[], result?: number): number | null {
     if (cache[numSystemTwo]) {
       return cache[numSystemTwo];
     }
@@ -21,7 +21,7 @@ let FindNumSystemTen = function(): Function {
 }
 let findNumSystemTwo = function(): Function {
   let cache: { [key: string]: number } = {};
-  return function findNumSystemTwoRecursion(numeric: number, result ? : string, numberCopy ? : number): number | null {
+  return function findNumSystemTwoRecursion(numeric: number, result?: string, numberCopy?: number): number | null {
     numberCopy = numberCopy || numeric;
     if (cache[numeric]) {
       return cache[numeric];

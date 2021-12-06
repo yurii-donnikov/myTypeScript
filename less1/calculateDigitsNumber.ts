@@ -4,9 +4,9 @@ let calculateDigitsNumber = function(): Function {
       [key: string]: number
     }
   } = {};
-  return function calculateDigitsNumberRecursion(numeric: number, result ? : {
+  return function calculateDigitsNumberRecursion(numeric: number, result?: {
     [key: string]: number
-  }, count ? : number, arrayNumber ? : string[]): object | null {
+  }, count?: number, arrayNumber?: string[]): object | null {
     if (typeof arguments[0] == 'undefined') {
       return null;
     }

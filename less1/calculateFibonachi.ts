@@ -1,6 +1,6 @@
 let calculateFibonachi = function(): Function {
   let cache: number[] = [];
-  return function calculateFibonachiRecurcion(numeric: number, result ? : number[], count ? : number): number | null {
+  return function calculateFibonachiRecurcion(numeric: number, result?: number[], count?: number): number | null {
     if (cache[numeric]) {
       return cache[numeric];
     }

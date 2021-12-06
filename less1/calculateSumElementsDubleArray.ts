@@ -2,7 +2,7 @@ let calculateSumElementsDubleArray = function(): Function {
   let cache: {
     [key: string]: number
   } = {};
-  return function findSumDubleArrayRecurcion(array: number[][], callback: Function, index ? : number, index2 ? : number, result ? : number): number {
+  return function findSumDubleArrayRecurcion(array: number[][], callback: Function, index?: number, index2?: number, result?: number): number {
     if (cache[array + String(callback)]) {
       return cache[array + String(callback)];
     }
@@ -29,7 +29,7 @@ let calculateAmountElementsDubleArray = function(): Function {
       [key: string]: number
     }
   } = {};
-  return function findNumbersDubleArrayRecurcion(array: number[][], callback: Function, count ? : number, countTwo ? : number, result ? : {
+  return function findNumbersDubleArrayRecurcion(array: number[][], callback: Function, count?: number, countTwo?: number, result?: {
     [key: string]: number
   }): object {
     if (cache[array + String(callback)]) {

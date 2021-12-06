@@ -38,7 +38,7 @@ class Department {
   }
 }
 
-interface IRestauratn < T > {
+interface IRestauratn<T> {
   sumSalary(callback: Function): null | {
     [key: string]: number
   };
@@ -54,7 +54,7 @@ interface IRestauratn < T > {
   departmentLeader(callback: Function): null | number[];
 }
 
-class Restaurant < P > implements IRestauratn < P > {
+class Restaurant<P> implements IRestauratn<P> {
   employees: Employee[];
   departments: Departments[];
 
@@ -227,7 +227,7 @@ buttonAddCard.innerText = 'add card';
 cardBlock.className = 'cardBlock';
 mainBlock.appendChild(cardBlock);
 mainBlock.appendChild(buttonAddCard);
-let eventTarget: any;
+let eventTarget;
 let changeEmployee: HTMLElement;
 let employeeCard: HTMLElement;
 let itemBlockInfo: HTMLElement;
@@ -291,7 +291,7 @@ function createCard(): void {
         employeeProperty = itemBlockInfo.appendChild(document.createElement('div'));
         employeeInfo = itemBlockInfo.appendChild(document.createElement('div'));
         employeeProperty.innerText = item;
-        let separateEmployee: { [key: string]: any } [] = restaurant.employees;
+        let separateEmployee: Employee[] = restaurant.employees;
         employeeInfo.innerText = separateEmployee[i][item];
         employeeInfo.className = item;
       }
@@ -346,7 +346,7 @@ function changeCard(): void {
         for (let j = 0; j < elementInput[i].children.length; j++) {
           if (((elementInput[i].children[j]) as HTMLInputElement).checked) {
             let elementInputRadio: string = ((elementInput[i].children[j]) as HTMLInputElement).name;
-            let separateEmployee: { [key: string]: any } [] = restaurant.employees;
+            let separateEmployee: Employee[] = restaurant.employees;
             separateEmployee[indexBlockEmployee][elementInputRadio] = ((elementInput[i].children[j]) as HTMLInputElement).value === 'true';
             eventTarget.parentElement.children[i].children[1].innerText = '' + ((elementInput[i].children[j]) as HTMLInputElement).value;
           }
@@ -355,10 +355,10 @@ function changeCard(): void {
         if (((elementInput[i]) as HTMLInputElement).value !== '') {
           let elementInputName = ((elementInput[i]) as HTMLInputElement).placeholder;
           if (((elementInput[i]) as HTMLInputElement).placeholder === 'salary' || ((elementInput[i]) as HTMLInputElement).placeholder === 'department') {
-            let separateEmployee: { [key: string]: any } [] = restaurant.employees;
+            let separateEmployee: Employee[] = restaurant.employees;
             separateEmployee[indexBlockEmployee][elementInputName] = Number(((elementInput[i]) as HTMLInputElement).value);
           } else {
-            let separateEmployee: { [key: string]: any} [] = restaurant.employees;
+            let separateEmployee: Employee[] = restaurant.employees;
             separateEmployee[indexBlockEmployee][elementInputName] = ((elementInput[i]) as HTMLInputElement).value;
           }
           eventTarget.parentElement.children[i].children[1].innerText = ((elementInput[i]) as HTMLInputElement).value;
@@ -368,10 +368,7 @@ function changeCard(): void {
     }
     isFlag = false;
   } else {
-    let resultObject: {
-      [key: string]: number | string | boolean
-    } = {};
-
+    let resultObject: Employee;
     for (let i = 0; i < elementInput.length; i++) {
       let definitelyInput = document.getElementsByClassName('inputInfo')[i];
       if (definitelyInput.children.length) {
@@ -391,7 +388,7 @@ function changeCard(): void {
         }
       }
     }
-    let objectEmployees: { [key: string]: any } = restaurant.employees;
+    let objectEmployees: Employee[] = restaurant.employees;
     objectEmployees.push(resultObject);
     createCard()
   }

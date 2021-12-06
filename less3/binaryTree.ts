@@ -1,13 +1,13 @@
-interface InterfaceNode < T > {
+interface InterfaceNode<T> {
   value: T | null;
-  left: InterfaceNode < T > | null;
-  right: InterfaceNode < T > | null;
+  left: InterfaceNode<T> | null;
+  right: InterfaceNode<T> | null;
 }
 
-class BinaryNode < T > {
+class BinaryNode<T> {
   value: T | null;
-  left: InterfaceNode < T > | null;
-  right: InterfaceNode < T > | null;
+  left: InterfaceNode<T> | null;
+  right: InterfaceNode<T> | null;
 
   constructor() {
     this.value = null;
@@ -15,7 +15,7 @@ class BinaryNode < T > {
     this.left = null;
   }
     
-  insert(value: T, node: InterfaceNode < T > ): BinaryNode < T > | void | boolean {
+  insert(value: T, node: InterfaceNode<T> ): BinaryNode<T> | void | boolean {
     node = node || this;
     if (!node.value) {
       node.value = value;
@@ -34,7 +34,7 @@ class BinaryNode < T > {
       return this.insert(value, node.left);
     }
   }
-  search(value: T, node ? : InterfaceNode < T > ): null | void | T {
+  search(value: T, node?: InterfaceNode<T> ): null | void | T {
     node = node || this;
     if (arguments[0] === undefined) {
       return null;
@@ -56,7 +56,7 @@ class BinaryNode < T > {
     }
       return null;
   }
-  remove(value: T, node ? : InterfaceNode < T > , linkParent ? : InterfaceNode < T > , flag ? : boolean): null | void | T {
+  remove(value: T, node?: InterfaceNode<T> , linkParent?: InterfaceNode<T> , flag?: boolean): null | void | T {
     if (arguments[0] === undefined) {
       return null;
     }

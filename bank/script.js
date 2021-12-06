@@ -262,7 +262,7 @@ var Render = /** @class */ (function () {
                                 var items = item;
                                 this.blockProperty = blockCheck.appendChild(document.createElement('div'));
                                 this.blockProperty.innerHTML =
-                                    "<span class=\"checkProperty\">".concat(item, "</span>\n                           <span class=\"").concat(item).concat(objectClient[property][i_1]['name'], "\">").concat(objectClient[property][i_1][items], "</span>");
+                                    "<span class=\"checkProperty\">".concat(item, "</span>\n                   <span class=\"").concat(item).concat(objectClient[property][i_1]['name'], "\">").concat(objectClient[property][i_1][items], "</span>");
                             }
                         }
                     }
@@ -270,7 +270,7 @@ var Render = /** @class */ (function () {
                         this.blockProperty = this.clientCard.appendChild(document.createElement('div'));
                         this.blockProperty.className = 'blockProperty';
                         this.blockProperty.innerHTML =
-                            "<span class=\"property\">".concat(property, "</span>\n                <span class=\"").concat(property, "\">").concat(objectClient[prop], "</span>");
+                            "<span class=\"property\">".concat(property, "</span>\n               <span class=\"").concat(property, "\">").concat(objectClient[prop], "</span>");
                     }
                 }
                 this.buttonChange = this.clientCard.appendChild(document.createElement('div'));
@@ -357,6 +357,7 @@ var Render = /** @class */ (function () {
             }
         }
         function updateCheck(itemСheck, index, flag, copyNewClient) {
+            if (copyNewClient === void 0) { copyNewClient = {}; }
             if (flag) {
                 for (var i = 0; i < itemСheck.children.length; i++) {
                     if ((itemСheck.children[i]).type === 'radio') {

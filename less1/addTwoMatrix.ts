@@ -2,7 +2,7 @@ let addTwoMatrix = function(): Function {
   let cache: {
     [key: string]: number[][]
   } = {};
-  return function addTwoMatrixRecurcion(matrix: number[][], matrix2: number[][], index ? : number, index2 ? : number, result ? : number[][]): number[][] {
+  return function addTwoMatrixRecurcion(matrix: number[][], matrix2: number[][], index?: number, index2?: number, result?: number[][]): number[][] {
     if (cache[matrix + String(matrix2)]) {
       return cache[matrix + String(matrix2)];
     }

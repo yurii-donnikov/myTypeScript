@@ -2,10 +2,9 @@ let deleteValueString = function(): Function {
   let cache: {
     [key: string]: number[][]
   } = {};
-  return function deleteValueStringRecursion(matrix: number[][], value: number, index ? : number, index2 ? : number, copyMatrix ? : number[][]): number[][] {
+  return function deleteValueStringRecursion(matrix: number[][], value: number, index?: number, index2?: number, copyMatrix?: number[][]): number[][] {
     copyMatrix = copyMatrix || matrix;
     if (cache[String(copyMatrix)]) {
-      console.log(cache)
       return cache[String(matrix)];
     }
     cache[0] = matrix;
