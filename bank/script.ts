@@ -362,8 +362,8 @@ class Render {
     }
 
     function updateCheck(itemСheck: HTMLElement, index: number, flag: boolean, copyNewClient: {
-    [key: string]: string | number | boolean | object | account[] | 'checks' []
-    } = {}) {
+    [key: string]: string | number | boolean | object | account[]
+    } = {}): void {
       if (flag) {
         for (let i = 0; i < itemСheck.children.length; i++) {
           if (((itemСheck.children[i]) as HTMLInputElement).type === 'radio') {

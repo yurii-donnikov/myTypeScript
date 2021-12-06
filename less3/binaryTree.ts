@@ -9,8 +9,11 @@ class BinaryNode<T> {
     this.left = null;
   }
     
-  insert(value: T, node: BinaryNode<T> ): BinaryNode<T> | void | boolean {
+  insert(value: T, node: BinaryNode<T> ): boolean | null {
     node = node || this;
+    if (typeof arguments[0] === 'undefined') { 
+      return null;
+    }
     if (!node.value) {
       node.value = value;
       return true;
@@ -28,7 +31,8 @@ class BinaryNode<T> {
       return this.insert(value, node.left);
     }
   }
-  search(value: T, node?: BinaryNode<T> ): null | void | T {
+
+  search(value: T, node?: BinaryNode<T> ): null | T {
     node = node || this;
     if (arguments[0] === undefined) {
       return null;
@@ -50,7 +54,8 @@ class BinaryNode<T> {
     }
       return null;
   }
-  remove(value: T, node?: BinaryNode<T>, linkParent?: BinaryNode<T> , flag?: boolean): null | void | T {
+  
+  remove(value: T, node?: BinaryNode<T>, linkParent?: BinaryNode<T> , flag?: boolean): null | T {
     if (arguments[0] === undefined) {
       return null;
     }
@@ -97,6 +102,7 @@ class BinaryNode<T> {
         } else {
           node.value = node.left.value;
           node.left = node.left.left;
+        
         }
       }
     } else {
