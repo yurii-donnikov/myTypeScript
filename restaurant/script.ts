@@ -212,20 +212,20 @@ for (let props in restaurant.employees[0]) {
   if (props === 'isWorks') {
     let inputRadioBlock = document.createElement('div');
     inputRadioBlock.innerHTML = `<p>${props}</p>
-<input type="radio" id="contactChoice1" name="isWorks" value="true">
-<label for="contactChoice1">yes</label>
-<input type="radio" id="contactChoice2" name="isWorks" value="false">
-<label for="contactChoice2">no</label>`;
+      <input type="radio" id="contactChoice1" name="isWorks" value="true">
+      <label for="contactChoice1">yes</label>
+      <input type="radio" id="contactChoice2" name="isWorks" value="false">
+      <label for="contactChoice2">no</label>`;
     inputRadioBlock.className = 'inputInfo';
     modalWindow.appendChild(inputRadioBlock);
   } else {
     if (props === 'isLeader') {
       let inputRadioBlock = document.createElement('div');
       inputRadioBlock.innerHTML = `<p>${props}</p>
-  <input type="radio" id="contactChoice3" name="isLeader" value="true" >
-  <label for="contactChoice3">yes</label>
-  <input type="radio" id="contactChoice4" name="isLeader" value="false">
-  <label for="contactChoice4">no</label>`;
+        <input type="radio" id="contactChoice3" name="isLeader" value="true" >
+        <label for="contactChoice3">yes</label>
+        <input type="radio" id="contactChoice4" name="isLeader" value="false">
+        <label for="contactChoice4">no</label>`;
       inputRadioBlock.className = 'inputInfo';
       modalWindow.appendChild(inputRadioBlock);
     } else {
@@ -330,7 +330,7 @@ function changeCard(): void {
     }
     isFlag = false;
   } else {
-    let resultObject: Employee;
+    let resultObject = {} as Employee;
     for (let i = 0; i < elementInput.length; i++) {
       let definitelyInput = document.getElementsByClassName('inputInfo')[i];
       if (definitelyInput.children.length) {
@@ -350,8 +350,7 @@ function changeCard(): void {
         }
       }
     }
-    let objectEmployees: Employee[] = restaurant.employees;
-    objectEmployees.push(resultObject);
+    restaurant.addEmployee(new Employee(resultObject));
     createCard()
   }
   popupWindow.setAttribute('style', 'display: none');

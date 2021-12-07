@@ -1,15 +1,13 @@
-class BinaryNode<T> {
+class NodeBinary<T> {
   value: T | null;
-  left: BinaryNode<T> | null;
-  right: BinaryNode<T> | null;
-
-  constructor() {
-    this.value = null;
-    this.right = null;
-    this.left = null;
-  }
-
-  insert(value: T, node: BinaryNode<T> ): boolean | null {
+  left: NodeBinary<T> | null;
+  right: NodeBinary<T> | null;
+    constructor() {
+        this.value = null;
+        this.left = null;
+        this.right = null;
+    }
+  insert(value: T, node: NodeBinary<T> ): boolean | null {
     node = node || this;
     if (typeof arguments[0] === 'undefined') { 
       return null;
@@ -20,100 +18,88 @@ class BinaryNode<T> {
     }
     if (value > node.value) {
       if (!node.right) {
-        node.right = new BinaryNode();
+        node.right = new NodeBinary();
       }
       return this.insert(value, node.right);
     }
     if (node.value > value) {
       if (!node.left) {
-        node.left = new BinaryNode();
+        node.left = new NodeBinary();
       }
       return this.insert(value, node.left);
     }
   }
-
-  search(value: T, node?: BinaryNode<T> ): T | null {
+  search(value: T, node?: NodeBinary<T>): T | null {
     node = node || this;
-    if (arguments[0] === undefined) {
+    if(arguments[0] === undefined){
       return null;
     }
-    if (node.value === value) {
+    if(node.value === value){
       return node.value;
     }
-    if (node.value && node.value > value) {
-      if (!node.left) {
+    if(node.value > value) {
+      if(!node.left) {
         return null;
       }
       return this.search(value, node.left);
     }
-    if (node.value && node.value < value) {
-      if (!node.right) {
+    if(node.value < value) {
+      if(!node.right) {
         return null;
       }
       return this.search(value, node.right);
     }
-      return null;
   }
-  
-  remove(value: T, node?: BinaryNode<T>, linkParent?: BinaryNode<T> , flag?: boolean): T | null {
-    if (arguments[0] === undefined) {
+  remove(value: T, node?: NodeBinary<T>, linkParent?: NodeBinary<T>, flag?: boolean): T | null{
+    if(arguments[0] === undefined){
       return null;
     }
-    if (!this.search(value)) {
+    if(!this.search(value)){
       return null;
     }
     node = node || this;
     linkParent = linkParent || this;
     flag = flag || false;
-    if (flag) {
-      if (node.right) {
-        return this.remove(value, node.right, node, flag);
+    if(flag) {
+      if (node.right) {  //!== null
+      return this.remove(value, node.right, node, flag);
       } else {
         linkParent.right = null;
         return node.value;
       }
     }
-    if (node.value === value) {
-      if (!node.left && !node.right) {
-        if (linkParent.left && linkParent.left.value === node.value) {
+    if(node.value === value) {
+      if (!node.left && !node.right){
+        if(linkParent.left && linkParent.left.value === node.value){
           linkParent.left = null;
-        } else {
+        } else{
           linkParent.right = null;
         }
       }
-      if (!node.left && node.right) {
+      if(!node.left && node.right){
         node.value = node.right.value;
         node.right = node.right.right;
       }
-      if (node.left && !node.right) {
+      if(node.left && !node.right){
         node.value = node.left.value;
         node.left = node.left.left;
       }
-      if (node.left && node.right) {
-        if (node.left.right) {
+      if(node.left && node.right) {
+        if(node.left.right) {
           flag = true;
-          Object.defineProperty(node, 'value', {
-            enumerable: false,
-            writable: false,
-            configurable: false,
-            value: this.remove(value, node.left, node, flag)
-          })
+          node.value = this.remove(value, node.left, node, flag);
           flag = false;
-        } else {
-          node.value = node.left.value;
-          node.left = node.left.left;
+      } else {
+        node.value = node.left.value;
+        node.left = node.left.left;
         }
       }
     } else {
-      if (node.value && node.value < value) {
-        if (node.right) {
-          return this.remove(value, node.right, node, flag);
-        }
+      if(node.value < value) {
+        return this.remove(value, node.right, node, flag);
       }
-      if (node.value && node.value > value) {
-        if (node.left) {
-          return this.remove(value, node.left, node, flag);
-        }
+      if(node.value > value) {
+        return this.remove(value, node.left, node, flag);
       }
     }
   }
