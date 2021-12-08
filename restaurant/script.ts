@@ -292,7 +292,7 @@ class Render {
   }
 
   changeCard(): void {
-    let copyEmployeeInfo = {} as Employee
+    let copyEmployeeInfo = {} as Employee;
     if (this.isFlag) {
       copyEmployeeInfo['name'] = ((document.querySelector('.namePopup')) as HTMLInputElement).value;
       copyEmployeeInfo['position'] = ((document.querySelector('.positionPopup')) as HTMLInputElement).value;
