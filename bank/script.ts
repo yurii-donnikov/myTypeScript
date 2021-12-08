@@ -1,7 +1,7 @@
 interface Debet {
   name: 'Debet';
   balance: number;
-  limit ? : number;
+  limit? : number;
   isActive: boolean;
   currency: string;
 }
@@ -182,8 +182,6 @@ class Render {
   indexActiveCard?: number = 0;
   isFlag?: boolean = false;
   indexObject?: number = 0;
-  addNewClient = {} as Client;
-  newClient = {} as Client;
   blockProperty?: HTMLElement;
 
   constructor(container: string) {
@@ -318,12 +316,12 @@ class Render {
   }
 
   changeCard(): void {
-    let copyClietnInfo = {} as Client
+    let copyClietnInfo = {} as Client;
     if (this.isFlag) {
       copyClietnInfo['name'] = ((document.querySelector('.namePopup')) as HTMLInputElement).value;
       copyClietnInfo['isActive'] = ((document.querySelector('.isActivePopup')) as HTMLInputElement).checked;
-      copyClietnInfo['registration'] = new Date()
-      copyClietnInfo.checks = []
+      copyClietnInfo['registration'] = new Date();
+      copyClietnInfo.checks = [];
       copyClietnInfo.checks[0] = {} as account;
       copyClietnInfo.checks[0]['name'] = 'Debet';
       copyClietnInfo.checks[0]['balance'] = Number(((document.querySelector('.balanceDebetPopup')) as HTMLInputElement).value);
