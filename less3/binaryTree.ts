@@ -7,11 +7,8 @@ class NodeBinary<T> {
         this.left = null;
         this.right = null;
     }
-  insert(value: T, node: NodeBinary<T> ): boolean | null {
+  insert(value: T, node: NodeBinary<T> ): boolean | void {
     node = node || this;
-    if (typeof arguments[0] === 'undefined') { 
-      return null;
-    }
     if (!node.value) {
       node.value = value;
       return true;
@@ -29,33 +26,27 @@ class NodeBinary<T> {
       return this.insert(value, node.left);
     }
   }
-  search(value: T, node?: NodeBinary<T>): T | null {
+  search(value: T, node?: NodeBinary<T>): T | void {
     node = node || this;
-    if(arguments[0] === undefined){
-      return null;
-    }
     if(node.value === value){
       return node.value;
     }
-    if(node.value > value) {
+    if(node.value && node.value > value) {
       if(!node.left) {
-        return null;
+        return;
       }
       return this.search(value, node.left);
     }
-    if(node.value < value) {
+    if(node.value && node.value < value) {
       if(!node.right) {
-        return null;
+        return;
       }
       return this.search(value, node.right);
     }
   }
-  remove(value: T, node?: NodeBinary<T>, linkParent?: NodeBinary<T>, flag?: boolean): T | null{
-    if(arguments[0] === undefined){
-      return null;
-    }
+  remove(value: T, node?: NodeBinary<T>, linkParent?: NodeBinary<T>, flag?: boolean):T | void {
     if(!this.search(value)){
-      return null;
+      return;
     }
     node = node || this;
     linkParent = linkParent || this;
@@ -65,7 +56,9 @@ class NodeBinary<T> {
       return this.remove(value, node.right, node, flag);
       } else {
         linkParent.right = null;
-        return node.value;
+        if(node.value){
+          return node.value;
+        }
       }
     }
     if(node.value === value) {
@@ -87,7 +80,14 @@ class NodeBinary<T> {
       if(node.left && node.right) {
         if(node.left.right) {
           flag = true;
-          node.value = this.remove(value, node.left, node, flag);
+          if(node.value){
+          Object.defineProperty(node, 'value', {
+            enumerable: true,
+            configurable: true,
+            writable: true,
+            value: this.remove(value, node.left, node, flag)
+          });
+          }
           flag = false;
       } else {
         node.value = node.left.value;
@@ -95,11 +95,15 @@ class NodeBinary<T> {
         }
       }
     } else {
-      if(node.value < value) {
-        return this.remove(value, node.right, node, flag);
+      if(node.value && node.value < value) {
+        if(node.right){
+          return this.remove(value, node.right, node, flag);
+        }
       }
-      if(node.value > value) {
+      if(node.value && node.value > value) {
+        if(node.left){
         return this.remove(value, node.left, node, flag);
+        }
       }
     }
   }
