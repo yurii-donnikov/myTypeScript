@@ -1,6 +1,7 @@
 interface Debet {
   name: 'Debet';
   balance: number;
+  limit ? : number;
   isActive: boolean;
   currency: string;
 }
@@ -19,7 +20,7 @@ class Client {
   name: string;
   isActive: boolean;
   registration: object;
-  id?: number;
+  id? : number;
   checks: account[];
   constructor(dataClient: Client) {
     this.name = dataClient.name;
@@ -37,10 +38,10 @@ class Bank {
     this.clients = [];
   }
   addClient(dataClient: Client) {
-    this.clients.push(dataClient)
+    this.clients.push(dataClient);
   }
 
-  async haveMoney(callback: Function): Promise<null | number> {
+  async haveMoney(callback: Function) {
     let response = await fetch('https://freecurrencyapi.net/api/v2/latest?apikey=dae13160-3b0e-11ec-8361-e108ba6473f9');
     let currencies = (await response.json()).data;
     let result: number = 0;
@@ -61,7 +62,7 @@ class Bank {
     return null;
   }
 
-  async debtMoney(callback: Function): Promise<null | number> {
+  async debtMoney(callback: Function) {
     let response = await fetch('https://freecurrencyapi.net/api/v2/latest?apikey=dae13160-3b0e-11ec-8361-e108ba6473f9');
     let {data} = await response.json();
     let result: number = 0;
@@ -84,10 +85,10 @@ class Bank {
     return null;
   }
 
-  async sumClientsDebt(callback: Function, isActive: Function): Promise<null | {[key: string]: number}> {
+  async sumClientsDebt(callback: Function, isActive: Function) {
     let response = await fetch('https://freecurrencyapi.net/api/v2/latest?apikey=dae13160-3b0e-11ec-8361-e108ba6473f9');
     let currencies = (await response.json()).data;
-    let result: {[key: string]: number} = {};
+    let result: { [key: string]: number } = {};
     result.clients = 0;
     result.debt = 0;
     if (this.clients.length) {
@@ -181,10 +182,8 @@ class Render {
   indexActiveCard?: number = 0;
   isFlag?: boolean = false;
   indexObject?: number = 0;
-  addNewClient;
-  newClient?: {
-    [key: string]: string | number | boolean | object | account[] 
-  } = {};
+  addNewClient = {} as Client;
+  newClient = {} as Client;
   blockProperty?: HTMLElement;
 
   constructor(container: string) {
@@ -199,15 +198,15 @@ class Render {
    <div class="popupWindow">
      <div class="backgroundWindow"></div>
      <div class="modalWindow">
-      <input type="text" placeholder="name" data-id="name" class="name">
+      <input type="text" placeholder="name" data-id="name" class="name namePopup">
       <label for="isActive">Active?</label>
-      <input type="radio" id="isActive" data-id="isActive" class="isActive">
+      <input type="radio" id="isActive" data-id="isActive" class="isActive isActivePopup">
       <div class="Debet">
         <p>Debet</p>
-        <input type="number" placeholder="balance" class="balance" data-id="balanceDebet">
+        <input type="number" placeholder="balance" class="balance balanceDebetPopup" data-id="balanceDebet">
         <label for="isActiveDebet">Active card?</label>
-        <input type="radio" id="isActiveDebet" class="isActive" data-id="isActiveDebet">
-        <select class="currency" data-id="currencyDebet">
+        <input type="radio" id="isActiveDebet" class="isActive isActiveDebetPopup" data-id="isActiveDebet">
+        <select class="currency currencyDebetPopup" data-id="currencyDebetPopup">
           <option>UAH</option>
           <option>EUR</option>
           <option>RUB</option>
@@ -216,11 +215,11 @@ class Render {
       </div>
       <div class="Credit">
         <p>Credit</p>
-        <input type="number" placeholder="balance" class="balance" data-id="balanceCredit">
-        <input type="number" placeholder="limit" class="limit" data-id="limitCredit">
+        <input type="number" placeholder="balance" class="balance balanceCreditPopup" data-id="balanceCredit">
+        <input type="number" placeholder="limit" class="limit limitCreditPopup" data-id="limitCredit">
         <label for="isActiveCredit">Active card?</label>
-        <input type="radio" id="isActiveCredit" class="isActive" data-id="isActiveCredit">
-        <select class="currency" data-id="currencyCredit">
+        <input type="radio" id="isActiveCredit" class="isActive isActiveCreditPopup" data-id="isActiveCredit">
+        <select class="currency currencyCreditPopup" data-id="currencyCredit">
           <option>UAH</option>
           <option>EUR</option>
           <option>RUB</option>
@@ -285,10 +284,16 @@ class Render {
         this.buttonDelete.setAttribute('data-function', 'deleteUser');
         this.buttonDelete.setAttribute('data-update', String(bank.clients[i]['id']));
         this.clientCard.addEventListener('click', (event) => {
-          let action = ((event.target) as Element).getAttribute('data-function');
-          let self: object = this;
-          if (typeof self[String(action)] === 'function') {
-            self[String(action)](event.target);
+          let action = ((event.target) as HTMLElement).getAttribute('data-function');
+          if (action === 'changeUser') {
+            if (event.target) {
+              this.changeUser(event.target as HTMLElement);
+            }
+          }
+          if (action === 'deleteUser') {
+            if (event.target) {
+              this.deleteUser(event.target as HTMLElement);
+            }
           }
         })
       }
@@ -304,122 +309,62 @@ class Render {
   }
 
   deleteUser(item: HTMLElement): void {
-    for (let i = 0; i < bank.clients.length; i++) {
-      if (bank.clients[i]['id'] === Number(item.getAttribute('data-update'))) {
-        let indexElement = bank.clients.indexOf(bank.clients[i]);
+    for (let i = 0; i < document.getElementsByClassName('cardBlock')[0].children.length; i++) {
+      if (document.getElementsByClassName('cardBlock')[0].children[i] === item.parentNode) {
         ((item.parentNode) as Element).remove();
-        bank.clients.splice(indexElement, 1);
+        bank.clients.splice(i, 1);
       }
     }
   }
 
   changeCard(): void {
-    let childrenPopup = document.querySelector('.modalWindow').children;
-    for (let i = 0; i < childrenPopup.length; i++) {
-      if (childrenPopup[i].className === 'Debet' || childrenPopup[i].className === 'Credit') {
-        if (this.isFlag) {
-          if (!this.newClient.checks) {
-            this.newClient.checks = [];
-          }
-          this.newClient.checks[this.indexObject] = {};
-          this.newClient.checks[this.indexObject]['name'] = childrenPopup[i].className;
-          this.newClient.checks[this.indexObject]['name'] = childrenPopup[i].className;
-          updateCheck(childrenPopup[i] as HTMLElement, this.indexObject, this.isFlag, this.newClient);
-          this.indexObject++;
-        } else {
-          updateCheck(childrenPopup[i] as HTMLElement, this.indexActiveCard, this.isFlag, this.newClient);
-        }
-      } else {
-        if (((childrenPopup[i]) as HTMLInputElement).type === 'radio') {
-          let name = childrenPopup[i].className;
-          if (this.isFlag) {
-            this.newClient[name] = ((childrenPopup[i]) as HTMLInputElement).checked;
-          } else {
-            bank.clients[this.indexActiveCard][name] = ((childrenPopup[i]) as HTMLInputElement).checked;
-            document.getElementsByClassName(childrenPopup[i].getAttribute('data-id'))[this.indexActiveCard].innerHTML = String(((childrenPopup[i]) as HTMLInputElement).checked);
-          }
-          ((childrenPopup[i]) as HTMLInputElement).checked = false;
-        } else {
-          if (((childrenPopup[i]) as HTMLInputElement).value) {
-            let name = childrenPopup[i].className;
-            if (this.isFlag) {
-              this.newClient[name] = ((childrenPopup[i]) as HTMLInputElement).value;
-              this.newClient['registration'] = new Date();
-            } else {
-              bank.clients[this.indexActiveCard]['name'] = ((childrenPopup[i]) as HTMLInputElement).value;
-              document.getElementsByClassName(childrenPopup[i].getAttribute('data-id'))[this.indexActiveCard].innerHTML = ((childrenPopup[i]) as HTMLInputElement).value;
-            }
-            ((childrenPopup[i]) as HTMLInputElement).value = '';
-          }
-        }
-      }
-    }
-
-    function updateCheck(itemСheck: HTMLElement, index: number, flag: boolean, copyNewClient: {
-    [key: string]: string | number | boolean | object | account[]
-    } = {}): void {
-      if (flag) {
-        for (let i = 0; i < itemСheck.children.length; i++) {
-          if (((itemСheck.children[i]) as HTMLInputElement).type === 'radio') {
-            let name = itemСheck.children[i].className;
-            copyNewClient.checks[index][name] = ((itemСheck.children[i]) as HTMLInputElement).checked;
-          } else {
-            if (((itemСheck.children[i]) as HTMLInputElement).value) {
-              if (((itemСheck.children[i]) as HTMLInputElement).valueAsNumber) {
-                let name = itemСheck.children[i].className;
-                copyNewClient.checks[index][name] = ((itemСheck.children[i]) as HTMLInputElement).valueAsNumber;
-              } else {
-                let name = itemСheck.children[i].className;
-                copyNewClient.checks[index][name] = ((itemСheck.children[i]) as HTMLInputElement).value;
-              }
-            }
-          }
-        }
-
-      } else {
-        for (let i = 0; i < bank.clients[index].checks.length; i++) {
-          if (bank.clients[index].checks[i].name === itemСheck.className) {
-            for (let j = 0; j < itemСheck.children.length; j++) {
-              if (((itemСheck.children[j]) as HTMLInputElement).type === 'radio') {
-                let nameClass = itemСheck.children[j].className;
-                bank.clients[index].checks[i][nameClass] = ((itemСheck.children[j]) as HTMLInputElement).checked;
-                document.getElementsByClassName(itemСheck.children[j].getAttribute('data-id'))[index].innerHTML =
-                  String(((itemСheck.children[j]) as HTMLInputElement).checked);
-                ((itemСheck.children[j]) as HTMLInputElement).checked = false;
-              } else {
-                if (((itemСheck.children[j]) as HTMLInputElement).value) {
-                  if (((itemСheck.children[j]) as HTMLInputElement).valueAsNumber) {
-                    let nameClass = itemСheck.children[j].className;
-                    bank.clients[index].checks[i][nameClass] = ((itemСheck.children[j]) as HTMLInputElement).valueAsNumber;
-                    document.getElementsByClassName(itemСheck.children[j].getAttribute('data-id'))[index].innerHTML =
-                      String(((itemСheck.children[j]) as HTMLInputElement).valueAsNumber);
-                    ((itemСheck.children[j]) as HTMLInputElement).valueAsNumber = undefined;
-                  } else {
-                    let nameClass = itemСheck.children[j].className;
-                    bank.clients[index].checks[i][nameClass] = ((itemСheck.children[j]) as HTMLInputElement).value;
-                    document.getElementsByClassName(itemСheck.children[j].getAttribute('data-id'))[index].innerHTML =
-                      ((itemСheck.children[j]) as HTMLInputElement).value;
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-      this.newClient = copyNewClient;
-    }
-    
+    let copyClietnInfo = {} as Client
     if (this.isFlag) {
-      this.addNewClient = this.newClient;
-      bank.addClient(new Client(this.addNewClient));
+      copyClietnInfo['name'] = ((document.querySelector('.namePopup')) as HTMLInputElement).value;
+      copyClietnInfo['isActive'] = ((document.querySelector('.isActivePopup')) as HTMLInputElement).checked;
+      copyClietnInfo['registration'] = new Date()
+      copyClietnInfo.checks = []
+      copyClietnInfo.checks[0] = {} as account;
+      copyClietnInfo.checks[0]['name'] = 'Debet';
+      copyClietnInfo.checks[0]['balance'] = Number(((document.querySelector('.balanceDebetPopup')) as HTMLInputElement).value);
+      copyClietnInfo.checks[0]['isActive'] = ((document.querySelector('.balanceDebetPopup')) as HTMLInputElement).checked;
+      copyClietnInfo.checks[0]['currency'] = ((document.querySelector('.balanceDebetPopup')) as HTMLInputElement).value;
+      copyClietnInfo.checks[1] = {} as account;
+      copyClietnInfo.checks[1]['name'] = 'Credit';
+      copyClietnInfo.checks[1]['balance'] = Number(((document.querySelector('.balanceCreditPopup')) as HTMLInputElement).value);
+      copyClietnInfo.checks[1]['limit'] = Number(((document.querySelector('.limitCreditPopup')) as HTMLInputElement).value);
+      copyClietnInfo.checks[1]['isActive'] = ((document.querySelector('.isActiveCreditPopup')) as HTMLInputElement).checked;
+      copyClietnInfo.checks[1]['currency'] = ((document.querySelector('.currencyDebetPopup')) as HTMLInputElement).value;
       this.isFlag = false;
-      this.newClient = {
-        checks: [],
-      };
       this.indexObject = 0;
+      bank.addClient(new Client(copyClietnInfo));
       this.createCard();
+    } else {
+      if (this.indexActiveCard !== undefined) {
+        document.getElementsByClassName('name')[this.indexActiveCard].innerHTML = ((document.querySelector('.namePopup')) as HTMLInputElement).value;
+        bank.clients[this.indexActiveCard]['name'] = ((document.querySelector('.namePopup')) as HTMLInputElement).value;
+        document.getElementsByClassName('isActive')[this.indexActiveCard].innerHTML = String(((document.querySelector('.isActivePopup')) as HTMLInputElement).checked);
+        bank.clients[this.indexActiveCard]['isActive'] = ((document.querySelector('.isActivePopup')) as HTMLInputElement).checked;
+        document.getElementsByClassName('balanceDebet')[this.indexActiveCard].innerHTML = String(((document.querySelector('.balanceDebetPopup')) as HTMLInputElement).value);
+        bank.clients[this.indexActiveCard].checks[0]['balance'] = Number(((document.querySelector('.balanceDebetPopup')) as HTMLInputElement).value);
+        document.getElementsByClassName('isActiveDebet')[this.indexActiveCard].innerHTML = String(((document.querySelector('.balanceDebetPopup')) as HTMLInputElement).checked);
+        bank.clients[this.indexActiveCard].checks[0]['isActive'] = ((document.querySelector('.balanceDebetPopup')) as HTMLInputElement).checked;
+        document.getElementsByClassName('currencyDebet')[this.indexActiveCard].innerHTML = ((document.querySelector('.currencyDebetPopup')) as HTMLInputElement).value;
+        bank.clients[this.indexActiveCard].checks[0]['currency'] = ((document.querySelector('.balanceDebetPopup')) as HTMLInputElement).value;
+        document.getElementsByClassName('balanceCredit')[this.indexActiveCard].innerHTML = String(((document.querySelector('.balanceCreditPopup')) as HTMLInputElement).value);
+        bank.clients[this.indexActiveCard].checks[1]['balance'] = Number(((document.querySelector('.balanceCreditPopup')) as HTMLInputElement).value);
+        document.getElementsByClassName('limitCredit')[this.indexActiveCard].innerHTML = String(((document.querySelector('.limitCreditPopup')) as HTMLInputElement).value);
+        bank.clients[this.indexActiveCard].checks[1]['limit'] = Number(((document.querySelector('.limitCreditPopup')) as HTMLInputElement).value);
+        document.getElementsByClassName('isActiveCredit')[this.indexActiveCard].innerHTML = String(((document.querySelector('.isActiveCreditPopup')) as HTMLInputElement).checked);
+        bank.clients[this.indexActiveCard].checks[1]['isActive'] = ((document.querySelector('.isActiveCreditPopup')) as HTMLInputElement).checked;
+        document.getElementsByClassName('currencyCredit')[this.indexActiveCard].innerHTML = ((document.querySelector('.currencyDebetPopup')) as HTMLInputElement).value;
+        bank.clients[this.indexActiveCard].checks[1]['currency'] = ((document.querySelector('.currencyDebetPopup')) as HTMLInputElement).value;
+      }
     }
     ((document.querySelector('.popupWindow')) as HTMLElement).setAttribute('style', 'display: none');
+    ((document.querySelector('.isActivePopup')) as HTMLInputElement).checked = false;
+    ((document.querySelector('.isActiveDebetPopup')) as HTMLInputElement).checked = false;
+    ((document.querySelector('.isActiveCreditPopup')) as HTMLInputElement).checked = false;
   }
 }
 let render = new Render('.mainBlock');
