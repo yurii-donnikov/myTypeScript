@@ -7,42 +7,48 @@ class NodeBinary<T> {
         this.left = null;
         this.right = null;
     }
-  insert(value: T, node: NodeBinary<T> ): boolean | void {
+  insert(value: T, node: NodeBinary<T> ): boolean {
     node = node || this;
-    if (!node.value) {
-      node.value = value;
-      return true;
-    }
-    if (value > node.value) {
-      if (!node.right) {
-        node.right = new NodeBinary();
+    if(arguments[0]){
+      if (!node.value) {
+        node.value = value;
+        return true;
       }
-      return this.insert(value, node.right);
-    }
-    if (node.value > value) {
-      if (!node.left) {
-        node.left = new NodeBinary();
+      if (value > node.value) {
+        if (!node.right) {
+          node.right = new NodeBinary();
+        }
+        return this.insert(value, node.right);
       }
-      return this.insert(value, node.left);
+      if (node.value > value) {
+        if (!node.left) {
+          node.left = new NodeBinary();
+        }
+        return this.insert(value, node.left);
+      } 
     }
+      return false
   }
-  search(value: T, node?: NodeBinary<T>): T | void {
+  search(value: T, node?: NodeBinary<T>): T | null {
     node = node || this;
-    if(node.value === value){
-      return node.value;
-    }
-    if(node.value && node.value > value) {
-      if(!node.left) {
-        return;
+    if(arguments[0]){
+      if(node.value === value){
+        return node.value;
       }
-      return this.search(value, node.left);
-    }
-    if(node.value && node.value < value) {
-      if(!node.right) {
-        return;
+      if(node.value && node.value > value) {
+        if(!node.left) {
+          return null;
+        }
+        return this.search(value, node.left);
       }
-      return this.search(value, node.right);
+      if(node.value && node.value < value) {
+        if(!node.right) {
+          return null;
+        }
+        return this.search(value, node.right);
+      }
     }
+    return null
   }
   remove(value: T, node?: NodeBinary<T>, linkParent?: NodeBinary<T>, flag?: boolean):T | void {
     if(!this.search(value)){
