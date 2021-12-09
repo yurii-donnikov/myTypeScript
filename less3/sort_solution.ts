@@ -14,7 +14,7 @@ Array.prototype.sortSelection = function(callback: Function): void {
         index = j;
       }
     }
-    if (index) {
+    if (index !== 0) {
       let temp: number | string = array[i];
       array[i] = resultElement;
       array[index] = temp;
