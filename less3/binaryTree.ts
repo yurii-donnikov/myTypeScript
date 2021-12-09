@@ -50,67 +50,54 @@ class NodeBinary<T> {
     }
     return null
   }
-  remove(value: T, node?: NodeBinary<T>, linkParent?: NodeBinary<T>, flag?: boolean):T | void {
-    if(!this.search(value)){
-      return;
+
+  findMin(node: NodeBinary<T>, parentNode: NodeBinary<T>): NodeBinary<T>{
+    if(!node.right){
+      if(node.left){
+        parentNode.right = node.left;
+      } else {
+        parentNode.right = null;
+      }
+      return node;
     }
+    return this.findMin(node.right, node);
+  }
+
+  remove(value: T, node?: NodeBinary<T>): void {
     node = node || this;
-    linkParent = linkParent || this;
-    flag = flag || false;
-    if(flag) {
-      if (node.right) {  //!== null
-      return this.remove(value, node.right, node, flag);
+    if(this.search(value) || arguments[0]){
+      if(node.value === value){
+        if(!node.left && !node.right){
+          node.value = null;
+          return;
+        }
+        if(!node.left && node.right){
+          node.value = node.right.value;
+          node.left = node.right.left;
+          node.right = node.right.right;
+          return;
+        }
+        if(node.left && !node.left.right){
+          node.value = node.left.value;
+          node.left = node.left.left;
+          return;
+        }
+        if(node.left && node.left.right){
+          node.value = (this.findMin(node.left.right, node.left)).value;
+        }
       } else {
-        linkParent.right = null;
-        if(node.value){
-          return node.value;
-        }
-      }
-    }
-    if(node.value === value) {
-      if (!node.left && !node.right){
-        if(linkParent.left && linkParent.left.value === node.value){
-          linkParent.left = null;
-        } else{
-          linkParent.right = null;
-        }
-      }
-      if(!node.left && node.right){
-        node.value = node.right.value;
-        node.right = node.right.right;
-      }
-      if(node.left && !node.right){
-        node.value = node.left.value;
-        node.left = node.left.left;
-      }
-      if(node.left && node.right) {
-        if(node.left.right) {
-          flag = true;
-          if(node.value){
-          Object.defineProperty(node, 'value', {
-            enumerable: true,
-            configurable: true,
-            writable: true,
-            value: this.remove(value, node.left, node, flag)
-          });
+        if(node.value && node.value < value) {
+          if(node.right){
+            return this.remove(value, node.right);
           }
-          flag = false;
-      } else {
-        node.value = node.left.value;
-        node.left = node.left.left;
         }
-      }
-    } else {
-      if(node.value && node.value < value) {
-        if(node.right){
-          return this.remove(value, node.right, node, flag);
-        }
-      }
-      if(node.value && node.value > value) {
-        if(node.left){
-        return this.remove(value, node.left, node, flag);
+        if(node.value && node.value > value) {
+          if(node.left){
+            return this.remove(value, node.left);
+          }
         }
       }
     }
+    return;
   }
 }
