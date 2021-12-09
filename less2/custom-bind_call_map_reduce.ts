@@ -18,28 +18,28 @@ Function.prototype.myCall = function<T> (obj: object, ...arg: Array<T> ): T {
 }
 
 interface Array<T> {
-  myForEach<K> (calcForEach: T): void;
-  myMap<K> (calcForEach: T): Array<K>;
-  myFilter<K>(funcFilter: T): Array<K>;
-  myReduce<K>(callback: T, startElement: number): number;
+  myForEach(calcForEach: Function): void;
+  myMap<T> (calcForEach: Function): Array<T>;
+  myFilter<T>(funcFilter: Function): Array<T>;
+  myReduce(callback: Function, startElement: number): number;
 }
 
-Array.prototype.myForEach = function<K> (calcForEach: Function): void {
+Array.prototype.myForEach = function (calcForEach: Function): void {
   for (let i: number = 0; i < this.length; i++) {
     calcForEach(this[i], i, this);
   }
 }
 
-Array.prototype.myMap = function<K> (callback: Function): Array<K>{
-  let resultArray: Array<K> = [];
+Array.prototype.myMap = function<T> (callback: Function): Array<T>{
+  let resultArray: Array<T> = [];
   for (let i = 0; i < this.length; i++) {
     resultArray.push(callback(this[i], i, this));
   }
   return resultArray;
 }
 
-Array.prototype.myFilter = function<K> (funcFilter: Function): Array<K> {
-  let resultArray: Array<K> = [];
+Array.prototype.myFilter = function<T> (funcFilter: Function): Array<T> {
+  let resultArray: Array<T> = [];
   for (let i = 0; i < this.length; i++) {
     if (funcFilter(this[i], i, this)) {
       resultArray.push(this[i]);
@@ -52,7 +52,9 @@ Array.prototype.myReduce = function(callback: Function, startElement: number): n
   let result: number;
   if (!startElement) {
     result = 0;
-  } else result = startElement;
+  } else {
+    result = startElement;
+  }
   for (let i = 0; i < this.length; i++) {
     result = callback(result, this[i]);
   }
