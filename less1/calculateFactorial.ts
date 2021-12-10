@@ -1,9 +1,6 @@
 let calculateFactorial = function(): Function {
   let cache: number[] = [];
-  return function calculateFactorialRecursion(num: number, count?: number, result?: number[]): number | null {
-    if (typeof arguments[0] === 'undefined') {
-      return null;
-    }
+  return function calculateFactorialRecursion(num: number, count?: number, result?: number[]): number {
     if (cache[num]) {
       return cache[num];
     }
