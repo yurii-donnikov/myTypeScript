@@ -5,12 +5,8 @@ let calculateFactorial = function(): Function {
       return cache[num];
   }
     if(cache.length){
-      if(cache[num]){
-        return cache[num];
-      } else {
-        cache[cache.length] = cache[cache.length -1] * cache.length;
-        return calculateFactorialRecursion(num, count, result);
-      }
+      cache[cache.length] = cache[cache.length -1] * cache.length;
+      return calculateFactorialRecursion(num, count, result);
     } else {
       result = result || [1, 1];
       count = count || 2;
