@@ -1,11 +1,11 @@
 let FindNumSystemTen = function(): Function {
   let cache: {[key: string]: number} = {};
-  return function FindNumSystemTenRecursion(numSystemTwo: number, count?: number, arrayNum?: string[], result?: number): number | null {
+  return function FindNumSystemTenRecursion(numSystemTwo: number, count?: number, arrayNum?: string[], result?: number): number  {
     if (cache[numSystemTwo]) {
       return cache[numSystemTwo];
     }
     if (typeof arguments[0] === 'undefined') {
-      return null;
+      throw new Error();
     }
     result = result || 0;
     arrayNum = arrayNum || ('' + numSystemTwo).split('').reverse();
@@ -18,8 +18,8 @@ let FindNumSystemTen = function(): Function {
   }
 }
 let findNumSystemTwo = function(): Function {
-  let cache: { [key: string]: number } = {};
-  return function findNumSystemTwoRecursion(numeric: number, result?: string, numberCopy?: number): number | null {
+  let cache: {[key: string]: number} = {};
+  return function findNumSystemTwoRecursion(numeric: number, result?: string, numberCopy?: number): number {
     numberCopy = numberCopy || numeric;
     if (cache[numeric]) {
       return cache[numeric];
@@ -27,7 +27,7 @@ let findNumSystemTwo = function(): Function {
     let sum: number;
     result = result || '';
     if (typeof arguments[0] === 'undefined') {
-      return null;
+      throw new Error();
     }
     if ((sum = numberCopy / 2) >= 1) {
       if (sum % 2 == parseInt(String(sum % 2))) {
