@@ -31,21 +31,21 @@ Array.prototype.myForEach = function (calcForEach: Function): void {
 }
 
 Array.prototype.myMap = function<T> (callback: Function): Array<T>{
-  let resultArray: Array<T> = [];
+  let newArray: Array<T> = [];
   for (let i = 0; i < this.length; i++) {
-    resultArray.push(callback(this[i], i, this));
+    newArray.push(callback(this[i], i, this));
   }
-  return resultArray;
+  return newArray;
 }
 
 Array.prototype.myFilter = function<T> (funcFilter: Function): Array<T> {
-  let resultArray: Array<T> = [];
+  let newArray: Array<T> = [];
   for (let i = 0; i < this.length; i++) {
     if (funcFilter(this[i], i, this)) {
-      resultArray.push(this[i]);
+      newArray.push(this[i]);
     }
   }
-  return resultArray;
+  return newArray;
 }
 
 Array.prototype.myReduce = function(callback: Function, startElement: number): number {
