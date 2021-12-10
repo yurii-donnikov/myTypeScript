@@ -1,11 +1,11 @@
 let findSumUniqueWord = function(): Function {
   let cache: {[key: string]: number} = {};
-  return function findSumUniqueWordRecursion(offer: string, word: string, count?: number, result?: number): number | null {
+  return function findSumUniqueWordRecursion(offer: string, word: string, count?: number, result?: number): number {
     count = count || 0;
     result = result || 0;
     let arrayOffer: string[] = offer.split(' ');
     if (!arguments[1]) {
-      return null;
+      throw new Error();
     }
     if (cache[offer + word]) {
       return cache[offer + word];
