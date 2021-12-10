@@ -1,8 +1,8 @@
 let monogrammaMemoiz = function(): Function {
   let cache: {[key: string]: boolean} = {};
-  return function monogrammaRecursion(wordOne: string, wordTwo: string, count1?: number, count2?: number, arrayWordOne?: string[], arrayWordTwo?: string[]): boolean | null{
+  return function monogrammaRecursion(wordOne: string, wordTwo: string, count1?: number, count2?: number, arrayWordOne?: string[], arrayWordTwo?: string[]): boolean {
     if (!arguments[1]) {
-      return null;
+      throw new Error();
     }
     if (typeof cache[wordOne + wordTwo] !== 'undefined') {
       return cache[wordOne + wordTwo];
