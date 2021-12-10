@@ -1,14 +1,8 @@
 let calculateDigitsNumber = function(): Function {
-  let cache: {
-    [key: string]: {
-      [key: string]: number
-    }
-  } = {};
-  return function calculateDigitsNumberRecursion(numeric: number, result?: {
-    [key: string]: number
-  }, count?: number, arrayNumber?: string[]): {[key: string]: number} | null {
+  let cache: {[key: string]: {[key: string]: number}} = {};
+  return function calculateDigitsNumberRecursion(numeric: number, result?: {[key: string]: number}, count?: number, arrayNumber?: string[]): {[key: string]: number}{
     if (typeof arguments[0] === 'undefined') {
-      return null;
+      throw new Error();
     }
     if (cache[numeric]) {
       return cache[numeric];
