@@ -2,13 +2,13 @@ let deleteValueString = function(): Function {
   let cache: {
     [key: string]: number[][]
   } = {};
-  return function deleteValueStringRecursion(matrix: number[][], value: number, index?: number, index2?: number, copyMatrix?: number[][]): number[][] | null {
+  return function deleteValueStringRecursion(matrix: number[][], value: number, index?: number, index2?: number, copyMatrix?: number[][]): number[][] {
     copyMatrix = copyMatrix || matrix;
     if (cache[String(copyMatrix)]) {
       return cache[String(matrix)];
     }
     if (typeof arguments[1] === 'undefined') {
-      return null;
+      throw new Error();
     }
     cache[0] = matrix;
     index = index || 0;
