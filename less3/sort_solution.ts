@@ -1,10 +1,10 @@
 interface Array<T> {
-  sortSelection(callback: T): void;
-  sortBubble(callback: T): void;
+  sortSelection(callback: Function): void;
+  sortBubble(callback: Function): void;
 }
 
 Array.prototype.sortSelection = function(callback: Function): void {
-  let array: number[] | string[] = this;
+  let array: number[] = this;
   for (let i: number = 0; i < array.length; i++) {
     let resultElement: number | string = array[i];
     let index: number = 0;
@@ -23,7 +23,7 @@ Array.prototype.sortSelection = function(callback: Function): void {
 }
 
 Array.prototype.sortBubble = function(callback: Function): void {
-  let array: number[] | string[] = this;
+  let array: number[] = this;
   for (let i: number = array.length - 1; i > 0; i--) {
     for (let j: number = 0; j < i; j++) {
       if (callback(array[j], array[j + 1])) {
