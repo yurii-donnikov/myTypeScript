@@ -1,11 +1,11 @@
 let calculateFibonachi = function(): Function {
   let cache: number[] = [];
-  return function calculateFibonachiRecurcion(numeric: number, result?: number[], count?: number): number | null {
+  return function calculateFibonachiRecurcion(numeric: number, result?: number[], count?: number): number {
     if (cache[numeric]) {
       return cache[numeric];
     }
     if (typeof arguments[0] === 'undefined') {
-      return null;
+      throw new Error();
     }
     result = result || [0, 1];
     count = count || 0;
