@@ -1,13 +1,14 @@
-class NodeBinary<T> {
-  value: T | null;
-  left: NodeBinary<T> | null;
-  right: NodeBinary<T> | null;
+class NodeBinary {
+  value: number | null;
+  left: NodeBinary | null;
+  right: NodeBinary | null;
     constructor() {
         this.value = null;
         this.left = null;
         this.right = null;
     }
-  insert(value: T, node: NodeBinary<T> ): boolean {
+
+  insert(value: number, node?: NodeBinary ): boolean {
     node = node || this;
     if(arguments[0]){
       if (!node.value) {
@@ -27,9 +28,10 @@ class NodeBinary<T> {
         return this.insert(value, node.left);
       } 
     }
-      return false
+    throw new Error('не передан обязательный параметр');
   }
-  search(value: T, node?: NodeBinary<T>): T | null {
+  
+  search(value: number, node?: NodeBinary): number | null {
     node = node || this;
     if(arguments[0]){
       if(node.value === value){
@@ -48,10 +50,10 @@ class NodeBinary<T> {
         return this.search(value, node.right);
       }
     }
-    return null
+    throw new Error('не передан обязательный параметр');
   }
 
-  findMin(node: NodeBinary<T>, parentNode: NodeBinary<T>): NodeBinary<T>{
+  findMin(node: NodeBinary, parentNode: NodeBinary): NodeBinary{
     if(!node.right){
       if(node.left){
         parentNode.right = node.left;
@@ -63,9 +65,9 @@ class NodeBinary<T> {
     return this.findMin(node.right, node);
   }
 
-  remove(value: T, node?: NodeBinary<T>): void {
+  remove(value: number, node?: NodeBinary): void {
     node = node || this;
-    if(this.search(value) || arguments[0]){
+    if(this.search(value)){
       if(node.value === value){
         if(!node.left && !node.right){
           node.value = null;
@@ -98,6 +100,5 @@ class NodeBinary<T> {
         }
       }
     }
-    return;
   }
 }
