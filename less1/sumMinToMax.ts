@@ -1,9 +1,6 @@
 let sumMinToMax = function(): Function {
   let cache: {[key: string]: number} = {};
-  return function sumMinToMaxRecurcion(array: number[], callback: Function, minElem?: number, maxElem?: number, index?: number, index2?: number): number | null {
-    if (!arguments[1]) {
-      return null;
-    }
+  return function sumMinToMaxRecurcion(array: number[], callback: Function, minElem?: number, maxElem?: number, index?: number, index2?: number): number {
     if (cache[array + String(callback)]) {
       return cache[array + String(callback)];
     }
