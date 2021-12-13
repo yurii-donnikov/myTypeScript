@@ -1,10 +1,10 @@
-interface ISort {
-  giveIndex: () => number;
-}
-
 interface Array<T> {
   sortSelection(callback: Function): void;
   sortBubble(callback: Function): void;
+}
+
+interface ISort {
+  giveIndex: () => number;
 }
 
 Array.prototype.sortSelection = function(callback: Function): void {
